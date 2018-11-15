@@ -3,6 +3,8 @@ const crypto = require('crypto');
 const config = require('../../common/config/env.config');
 const accountSid = config.twilioSmsAPI.accountSid;
 const authToken = config.twilioSmsAPI.authToken;
+var merge = require('deepmerge');
+
 const client = require('twilio')(accountSid, authToken);
 
 function generateOTP() {
@@ -19,22 +21,23 @@ function generateOTP() {
 exports.sendOtp = (req, res) => {
   let Otp = generateOTP();
   userData = Object.assign(req.body, { otp: Otp });
+  let responseObj = {};
 
   UserModel.createUser(userData)
-    .then(result => {
-      // enable OTP
-      return client.messages.create({
-        body:
-          result.otp + ' is your Orpay OTP. Enter this number and you are set!',
-        from: '+15123593913',
-        to: '+91' + result.mobileNumber,
-      });
-    })
+    // .then(result => {
+    //   responseObj = result;
+    //   // enable OTP
+    //   return client.messages.create({
+    //     body:
+    //       result.otp + ' is your Orpay OTP. Enter this number and you are set!',
+    //     from: '+15123593913',
+    //     to: '+91' + result.mobileNumber,
+    //   });
+    // })
     .then(message => {
-      let responseObj = {
-        message: `OTP send successfully to ${result.mobileNumber}`,
-        id: result.id,
-      };
+      //   res.status(200).send(responseObj);
+      delete message._id;
+      delete message.__v;
       res.status(200).send(message);
     })
     .catch(err => {

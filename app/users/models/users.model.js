@@ -1,5 +1,4 @@
 const mongoose = require('mongoose');
-
 const Schema = mongoose.Schema;
 
 const userSchema = new Schema(
@@ -18,8 +17,16 @@ const userSchema = new Schema(
       trim: true,
       index: true,
       unique: true,
-      type: Number,
+      type: String,
     },
+    address: [
+      {
+        flatNumber: String,
+        Landmark: String,
+        area: String,
+        pincode: Number,
+      },
+    ],
     otp: String,
     password: String,
     permissionLevel: Number,
@@ -59,9 +66,37 @@ let findByEmail = (exports.findByEmail = email => {
   return User.findOne({ email: email });
 });
 
+function generateOTP() {
+  // Declare a digits variable
+  // which stores all digits
+  var digits = '0123456789';
+  let OTP = '';
+  for (let i = 0; i < 4; i++) {
+    OTP += digits[Math.floor(Math.random() * 10)];
+  }
+  return OTP;
+}
+
+exports.generateOtpForExistingMobileNumber = mobileNumber => {
+  let otp = generateOTP();
+  return User.findOneAndUpdate(
+    { mobileNumber: mobileNumber },
+    {
+      $set: {
+        otp,
+      },
+    },
+    { new: true }
+  );
+};
+
+let findByMobileNumber = (exports.findByMobileNumber = mobileNumber => {
+  return User.findOne({ mobileNumber: mobileNumber });
+});
+
 exports.confirmOtp = userData => {
-  var otpMarked = User.findByIdAndUpdate(
-    userData.id,
+  return User.findOneAndUpdate(
+    { $and: [{ otp: userData.otp }, { _id: userData.id }] },
     {
       $set: {
         otp: null,
@@ -72,7 +107,6 @@ exports.confirmOtp = userData => {
     },
     { new: true }
   );
-  return otpMarked;
 };
 
 let findById = (exports.findById = id => {
@@ -84,6 +118,8 @@ let findById = (exports.findById = id => {
   });
 });
 
+// TODO: If user is entering first time then normal flow
+// else first check the number id and generate the otp send him back.
 exports.createUser = userData => {
   const user = new User(userData);
   return user.save();

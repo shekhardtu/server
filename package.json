@@ -1,5 +1,5 @@
 {
-  "name": "Orpay_API_server",
+  "name": "orpay-api-server",
   "version": "1.0.0",
   "description": "Orpay API handling server configurations",
   "main": "index.js",
@@ -15,6 +15,7 @@
   "license": "ISC",
   "dependencies": {
     "body-parser": "^1.18.3",
+    "deepmerge": "^2.2.1",
     "express": "^4.16.4",
     "jsonwebtoken": "^8.4.0",
     "moment": "^2.17.1",
@@ -24,7 +25,8 @@
     "node-uuid": "^1.4.8",
     "swagger-ui-express": "^2.0.13",
     "sync-request": "^4.0.2",
-    "twilio": "^3.23.2"
+    "twilio": "^3.23.2",
+    "validator": "^10.9.0"
   },
   "devDependencies": {
     "mocha": "^5.2.0",

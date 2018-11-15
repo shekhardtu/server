@@ -2,6 +2,7 @@ const express = require('express');
 const bodyParser = require('body-parser');
 const logger = require('morgan');
 
+const OtpRouter = require('./app/otp/routes.config');
 const AuthorizationRouter = require('./app/authorization/routes.config');
 const UsersRouter = require('./app/users/routes.config');
 
@@ -24,6 +25,7 @@ app.get('/', function(req, res) {
 
 // append /api for our http requests
 app.use('/api', router);
+OtpRouter.routesConfig(app);
 AuthorizationRouter.routesConfig(app);
 UsersRouter.routesConfig(app);
 

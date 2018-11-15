@@ -8,39 +8,26 @@ const PAID = config.permissionLevels.PAID_USER;
 const FREE = config.permissionLevels.NORMAL_USER;
 
 exports.routesConfig = function(app) {
-  app.post('/users', [UsersController.sendOtp]);
-  app.post('/users/confirmOtp', [UsersController.confirmOtp]);
-
-  app.post('/users/register', [
+  app.get('/users', [
     ValidationMiddleware.validJWTNeeded,
-    UsersController.insert,
+    PermissionMiddleware.minimumPermissionLevelRequired(PAID),
+    UsersController.list,
   ]);
-
-  app.post('/users/setup', [
+  app.get('/users/:userId', [
     ValidationMiddleware.validJWTNeeded,
-    UsersController.setup,
+    PermissionMiddleware.minimumPermissionLevelRequired(FREE),
+    PermissionMiddleware.onlySameUserOrAdminCanDoThisAction,
+    UsersController.getById,
   ]);
-
-  //   app.get('/users', [
-  //     ValidationMiddleware.validJWTNeeded,
-  //     PermissionMiddleware.minimumPermissionLevelRequired(PAID),
-  //     UsersController.list,
-  //   ]);
-  //   app.get('/users/:userId', [
-  //     ValidationMiddleware.validJWTNeeded,
-  //     PermissionMiddleware.minimumPermissionLevelRequired(FREE),
-  //     PermissionMiddleware.onlySameUserOrAdminCanDoThisAction,
-  //     UsersController.getById,
-  //   ]);
-  //   app.patch('/users/:userId', [
-  //     ValidationMiddleware.validJWTNeeded,
-  //     PermissionMiddleware.minimumPermissionLevelRequired(FREE),
-  //     PermissionMiddleware.onlySameUserOrAdminCanDoThisAction,
-  //     UsersController.patchById,
-  //   ]);
-  //   app.delete('/users/:userId', [
-  //     ValidationMiddleware.validJWTNeeded,
-  //     PermissionMiddleware.minimumPermissionLevelRequired(ADMIN),
-  //     UsersController.removeById,
-  //   ]);
+  app.patch('/users/:userId', [
+    ValidationMiddleware.validJWTNeeded,
+    PermissionMiddleware.minimumPermissionLevelRequired(FREE),
+    PermissionMiddleware.onlySameUserOrAdminCanDoThisAction,
+    UsersController.patchById,
+  ]);
+  app.delete('/users/:userId', [
+    ValidationMiddleware.validJWTNeeded,
+    PermissionMiddleware.minimumPermissionLevelRequired(ADMIN),
+    UsersController.removeById,
+  ]);
 };

@@ -26,7 +26,6 @@ exports.hasAuthValidFields = (req, res, next) => {
 
 exports.isPasswordAndUserMatch = (req, res, next) => {
   UserModel.findByEmail(req.body.email).then(user => {
-    console.log(user);
     if (!user) {
       res.status(404).send({ message: 'Please check your email or password' });
     } else {
