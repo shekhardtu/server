@@ -1,18 +1,34 @@
 {
-  "name": "backend",
+  "name": "Orpay_API_server",
   "version": "1.0.0",
-  "description": "",
+  "description": "Orpay API handling server configurations",
   "main": "index.js",
   "scripts": {
-    "start": "nodemon server.js",
+    "start": "nodemon app.js",
     "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/makinhs/rest-api-tutorial.git"
   },
   "author": "",
   "license": "ISC",
   "dependencies": {
     "body-parser": "^1.18.3",
     "express": "^4.16.4",
+    "jsonwebtoken": "^8.4.0",
+    "moment": "^2.17.1",
+    "moment-timezone": "^0.5.13",
     "mongoose": "^5.3.3",
-    "morgan": "^1.9.1"
+    "morgan": "^1.9.1",
+    "node-uuid": "^1.4.8",
+    "swagger-ui-express": "^2.0.13",
+    "sync-request": "^4.0.2",
+    "twilio": "^3.23.2"
+  },
+  "devDependencies": {
+    "mocha": "^5.2.0",
+    "should": "^13.2.3",
+    "supertest": "^3.3.0"
   }
 }
