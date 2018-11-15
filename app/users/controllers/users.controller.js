@@ -30,12 +30,12 @@ exports.sendOtp = (req, res) => {
         to: '+91' + result.mobileNumber,
       });
     })
-    .then(result => {
+    .then(message => {
       let responseObj = {
         message: `OTP send successfully to ${result.mobileNumber}`,
         id: result.id,
       };
-      res.status(200).send(responseObj);
+      res.status(200).send(message);
     })
     .catch(err => {
       res.status(409).send(err);
