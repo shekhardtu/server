@@ -44,10 +44,16 @@ const userSchema = new Schema(
 
 const User = mongoose.model('Users', userSchema);
 
-// userSchema.index({ email: 1 }, { unique: true, sparse: true });
 // userSchema.virtual('fullName').get(function() {
 //   return this.firstName + ' ' + this.lastName;
 // });
+
+// userSchema.virtual('fullName').set(function(name) {
+//   let str = name.split(' ')
+
+//   this.firstName = str[0]
+//   this.lastName = str[1]
+// })
 
 userSchema.virtual('id').get(function() {
   return this._id.toHexString();
@@ -120,7 +126,9 @@ let findById = (exports.findById = id => {
 
 // TODO: If user is entering first time then normal flow
 // else first check the number id and generate the otp send him back.
-exports.createUser = userData => {
+exports.createUser = (id, userData) => {
+  console.log(id, userData);
+  return User.findByIdAndUpdate(id, userData, { new: true });
   const user = new User(userData);
   return user.save();
 };

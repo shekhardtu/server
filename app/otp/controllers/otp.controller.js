@@ -96,7 +96,6 @@ exports.loginWithOtp = (req, res) => {
   try {
     let refreshId = req.body.userId + jwtSecret;
     let salt = crypto.randomBytes(16).toString('base64');
-    console.log(req.body);
     let hash = crypto
       .createHmac('sha512', salt)
       .update(refreshId)
@@ -106,12 +105,10 @@ exports.loginWithOtp = (req, res) => {
     let token = jwt.sign(req.body, jwtSecret);
     let b = new Buffer(hash);
     let refresh_token = b.toString('base64');
-    res
-      .status(201)
-      .send({
-        id: req.body.userId,
-        auth: { accessToken: token, refreshToken: refresh_token },
-      });
+    res.status(201).send({
+      id: req.body.userId,
+      auth: { accessToken: token, refreshToken: refresh_token },
+    });
   } catch (err) {
     res.status(500).send({ errors: err });
   }

@@ -8,6 +8,10 @@ const PAID = config.permissionLevels.PAID_USER;
 const FREE = config.permissionLevels.NORMAL_USER;
 
 exports.routesConfig = function(app) {
+  app.post('/users', [
+    ValidationMiddleware.validJWTNeeded,
+    UsersController.insert,
+  ]);
   app.get('/users', [
     ValidationMiddleware.validJWTNeeded,
     PermissionMiddleware.minimumPermissionLevelRequired(PAID),

@@ -67,8 +67,8 @@ exports.insert = (req, res) => {
     .digest('base64');
   req.body.password = salt + '$' + hash;
   req.body.permissionLevel = 1;
-
-  UserModel.createUser(req.body).then(
+  // user id can be recover by decoding jwt token (accessToken)
+  UserModel.createUser(req.jwt.userId, req.body).then(
     result => {
       res.status(201).send(result);
     },
