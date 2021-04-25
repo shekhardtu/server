@@ -20,7 +20,7 @@
     "jsonwebtoken": "^8.4.0",
     "moment": "^2.17.1",
     "moment-timezone": "^0.5.13",
-    "mongoose": "^5.3.3",
+    "mongoose": "^5.12.5",
     "morgan": "^1.9.1",
     "node-uuid": "^1.4.8",
     "swagger-ui-express": "^2.0.13",
@@ -29,7 +29,8 @@
     "validator": "^10.9.0"
   },
   "devDependencies": {
-    "mocha": "^5.2.0",
+    "mocha": "^8.3.2",
+    "nodemon": "^2.0.7",
     "should": "^13.2.3",
     "supertest": "^3.3.0"
   }
