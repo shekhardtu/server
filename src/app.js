@@ -51,6 +51,9 @@ if (config.env === 'production') {
 }
 
 // v1 api routes
+app.use('/', (req, res, next) => {
+  res.send('Welcome onbaord');
+});
 app.use('/v1', routes);
 
 // send back a 404 error for any unknown api request
