@@ -20,7 +20,7 @@
     "jsonwebtoken": "^8.4.0",
     "moment": "^2.17.1",
     "moment-timezone": "^0.5.13",
-    "mongoose": "^5.12.5",
+    "mongoose": "^5.13.15",
     "morgan": "^1.9.1",
     "node-uuid": "^1.4.8",
     "swagger-ui-express": "^2.0.13",
